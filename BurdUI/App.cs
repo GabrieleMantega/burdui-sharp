@@ -24,15 +24,12 @@ public class App : Control
     private int _width = 800;
     private int _height = 600;
     private DrawingContext burdUIContext;
-    
-    // contesto logico per te (non grafico di Avalonia)
-    public object? GraphicsContext { get; private set; }
 
     public View? Root { get; set; }
 
     public App()
     {
-        // inizializza bitmap interna
+        // init BurdUI graphics context
         var size = new PixelSize(_width, _height);
         var dpi = new Vector(192, 192);
 
@@ -41,7 +38,7 @@ public class App : Control
 
         Focusable = true;
 
-        // Eventi mouse/tastiera -> a te
+        // get raw events from mouse and keyboard
         PointerPressed += (s, e) =>
         {
             var p = e.GetPosition(this);
@@ -59,6 +56,7 @@ public class App : Control
             OnKey(e.Key);
         };
 
+        // override Avalonia image stretching 
         this.SizeChanged += (s, e) =>
         {
             ResizeBitmapIfNeeded();
@@ -71,67 +69,42 @@ public class App : Control
 
     protected virtual void OnMouseDown(double x, double y, PointerPressedEventArgs e)
     {
-        // override se vuoi
+        //TODO: add management
     }
 
     protected virtual void OnMouseMove(double x, double y, PointerEventArgs e)
     {
-        // override se vuoi
+        //TODO: add management
     }
     
 
     protected virtual void OnKey(Key key)
     {
-        // override se vuoi
+        //TODO: add management
     }
 
 
-    // ==========================
-    // RENDER AVALONIA
-    // ==========================
-
+    /// <summary>
+    /// Renders the BurdUI applications on an Avalonia Window
+    /// </summary>
+    /// <param name="ctx"></param>
     public override void Render(DrawingContext ctx)
     {
         base.Render(ctx);
         
-        // Chiama la tua paint logica
+        // painting BurdUI
         Root?.Paint(burdUIContext);
 
-        // disegna la bitmap interna sulla view
+       // passing the result to the Avalonia Window
         ctx.DrawImage(
             _bitmap,
             sourceRect: new Rect(0, 0, _width, _height),
             destRect: new Rect(0, 0, Bounds.Width, Bounds.Height));
     }
 
-    // ==========================
-    // IL TUO METODO PAINT
-    // ==========================
-    //
-    // Qui tu accedi alla bitmap e ci scrivi dentro i tuoi pixel
-    // (o qualunque logica interna)
-    // ==========================
-
-   /* protected virtual void Paint()
-    {
-        // Esempio mini: riempio lo sfondo
-        using var fb = _bitmap.Lock();
-        unsafe
-        {
-            uint* ptr = (uint*)fb.Address;
-            int count = _width * _height;
-            for (int i = 0; i < count; i++)
-                ptr[i] = 0xFF202020; // grigio scuro
-        }
-
-        // Qui puoi ottenere un puntatore ai pixel e implementare
-        // il tuo sistema grafico custom (booleans, tile map, ecc.)
-    }*/
-
-    // ==========================
-    // GESTIONE RESIZE
-    // ==========================
-
+    /// <summary>
+    /// Handles the window resize
+    /// </summary>
     private void ResizeBitmapIfNeeded()
     {
         int newW = (int)Math.Max(1, Bounds.Width);
