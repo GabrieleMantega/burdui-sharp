@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Avalonia;
+using Avalonia.Media;
 
 namespace BurdUI
 {
@@ -21,7 +23,7 @@ namespace BurdUI
         /// <summary>
         /// Vertical spacing (in pixels) between consecutive children.
         /// </summary>
-        public int Spacing { get; set; } = 0;
+        public double Spacing { get; set; } = 0;
 
         /// <summary>
         /// Performs the layout of children based on panel Bounds and Origin.
@@ -31,26 +33,26 @@ namespace BurdUI
         /// </summary>
         private void LayoutChildren()
         {
-            int innerWidth = Math.Max(0, this.Bounds.Width);
+            double innerWidth = Math.Max(0.0, this.Bounds.Width);
 
             if (Origin == VerticalStackOrigin.Top)
             {
-                int y = 0;
+                double y = 0;
                 foreach (var child in this.Children)
                 {
-                    int h = Math.Max(0, child.Bounds.Height);
-                    child.Bounds = new Rectangle(0, y, innerWidth, h);
+                    double h = Math.Max(0, child.Bounds.Height);
+                    child.Bounds = new Rect(0, y, innerWidth, h);
                     y += h + Spacing;
                 }
             }
             else // VerticalStackOrigin.Bottom
             {
-                int y = this.Bounds.Height;
+                double y = this.Bounds.Height;
                 foreach (var child in this.Children)
                 {
-                    int h = Math.Max(0, child.Bounds.Height);
+                    double h = Math.Max(0, child.Bounds.Height);
                     y -= h; // reserve space for the child
-                    child.Bounds = new Rectangle(0, y, innerWidth, h);
+                    child.Bounds = new Rect(0, y, innerWidth, h);
                     y -= Spacing;
                 }
             }
@@ -59,7 +61,7 @@ namespace BurdUI
         /// <summary>
         /// Lays out children, then defers to base to paint them.
         /// </summary>
-        public override void Paint(Graphics g)
+        public override void Paint(DrawingContext g)
         {
             // Compute child bounds before drawing
             LayoutChildren();

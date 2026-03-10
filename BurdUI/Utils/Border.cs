@@ -1,19 +1,19 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
+﻿
 using System.Globalization;
 using System.Xml;
 using System.Xml.Schema;
+using Avalonia;
+using Avalonia.Media;
 using System.Xml.Serialization;
 
 namespace BurdUI.Utils
 {
     public class Border : IXmlSerializable
     {
-        public Color Color { get; set; } = Color.Black;
+        public Color Color { get; set; } = Color.FromRgb(0,0,0);
 
-        public Color BackgroudColor { get; set; } = Color.White;
-
+        public Color BackgroudColor { get; set; } = Color.FromRgb(255,255,255);
+        
         [XmlAttribute]
         public float StrokeThickness { get; set; } = 2f;
 
@@ -33,39 +33,17 @@ namespace BurdUI.Utils
         /// <summary>
         /// Draws a rounded rectangle border on the provided graphics context.
         /// </summary>
-        public void Draw(Graphics g, Rectangle rect)
+        public void Draw(DrawingContext g, Rect rect)
         {
-            using (GraphicsPath path = CreateRoundedRectanglePath(rect, CornerRadius))
-            using (Pen pen = new Pen(Color, StrokeThickness))
-            {
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-                g.DrawPath(pen, path);
-            }
+            var pen = new Pen(new SolidColorBrush(Color), StrokeThickness);
+            g.DrawRectangle(pen, rect, CornerRadius);
         }
 
-        public void Fill(Graphics g, Rectangle rect)
+        public void Fill(DrawingContext g, Rect rect)
         {
-            using (GraphicsPath path = CreateRoundedRectanglePath(rect, CornerRadius))
-            using (Brush brush = new SolidBrush(BackgroudColor))
-            {
-                g.FillPath(brush, path);
-            }
+            g.FillRectangle(new SolidColorBrush(BackgroudColor), rect, CornerRadius);
         }
-
-        private GraphicsPath CreateRoundedRectanglePath(Rectangle rect, int radius)
-        {
-            GraphicsPath path = new GraphicsPath();
-
-            int d = radius * 2;
-
-            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
-            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
-            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
-            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
-            path.CloseFigure();
-
-            return path;
-        }
+        
 
         // ------------------------------
         // IXmlSerializable implementation
@@ -95,7 +73,7 @@ namespace BurdUI.Utils
                 if (AlignedText.TryParseHexColor(reader.Value, out var c))
                     Color = c;
                 else
-                    Color = Color.Black;
+                    Color = Color.FromRgb(0,0,0);
             }
             
             if (reader.MoveToAttribute("background"))
@@ -103,7 +81,7 @@ namespace BurdUI.Utils
                 if (AlignedText.TryParseHexColor(reader.Value, out var c))
                     BackgroudColor = c;
                 else
-                    BackgroudColor = Color.Black;
+                    BackgroudColor = Color.FromRgb(255,255,255);
             }
 
             if (reader.MoveToAttribute("strokeThickness"))

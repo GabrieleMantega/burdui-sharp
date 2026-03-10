@@ -1,102 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\spano\\uit\\burdui-sharp\\BurdUISharp\\BurdUITest\\BurdUITest.csproj": {}
+    "/Users/davide/RiderProjects/burdui-sharp/BurdUITest/BurdUITest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\spano\\uit\\burdui-sharp\\BurdUISharp\\BurdUITest\\BurdUITest.csproj": {
+    "/Users/davide/RiderProjects/burdui-sharp/BurdUI-old/BurdUI-old.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\spano\\uit\\burdui-sharp\\BurdUISharp\\BurdUITest\\BurdUITest.csproj",
-        "projectName": "BurdUITest",
-        "projectPath": "C:\\Users\\spano\\uit\\burdui-sharp\\BurdUISharp\\BurdUITest\\BurdUITest.csproj",
-        "packagesPath": "C:\\Users\\spano\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\spano\\uit\\burdui-sharp\\BurdUISharp\\BurdUITest\\obj\\",
+        "projectUniqueName": "/Users/davide/RiderProjects/burdui-sharp/BurdUI-old/BurdUI-old.csproj",
+        "projectName": "BurdUI-old",
+        "projectPath": "/Users/davide/RiderProjects/burdui-sharp/BurdUI-old/BurdUI-old.csproj",
+        "packagesPath": "/Users/davide/.nuget/packages/",
+        "outputPath": "/Users/davide/RiderProjects/burdui-sharp/BurdUI-old/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\spano\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/davide/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0-windows"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net8.0-windows7.0": {
-            "targetAlias": "net8.0-windows",
-            "projectReferences": {
-              "C:\\Users\\spano\\uit\\burdui-sharp\\BurdUISharp\\BurdUI\\BurdUI.csproj": {
-                "projectPath": "C:\\Users\\spano\\uit\\burdui-sharp\\BurdUISharp\\BurdUI\\BurdUI.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
-        }
-      },
-      "frameworks": {
-        "net8.0-windows7.0": {
-          "targetAlias": "net8.0-windows",
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            },
-            "Microsoft.WindowsDesktop.App.WindowsForms": {
-              "privateAssets": "none"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\spano\\uit\\burdui-sharp\\BurdUISharp\\BurdUI\\BurdUI.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\spano\\uit\\burdui-sharp\\BurdUISharp\\BurdUI\\BurdUI.csproj",
-        "projectName": "BurdUI",
-        "projectPath": "C:\\Users\\spano\\uit\\burdui-sharp\\BurdUISharp\\BurdUI\\BurdUI.csproj",
-        "packagesPath": "C:\\Users\\spano\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\spano\\uit\\burdui-sharp\\BurdUISharp\\BurdUI\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\spano\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net8.0-windows"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/Users/davide/.dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -114,7 +38,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -138,7 +63,74 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/Users/davide/.dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/davide/RiderProjects/burdui-sharp/BurdUITest/BurdUITest.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/davide/RiderProjects/burdui-sharp/BurdUITest/BurdUITest.csproj",
+        "projectName": "BurdUITest",
+        "projectPath": "/Users/davide/RiderProjects/burdui-sharp/BurdUITest/BurdUITest.csproj",
+        "packagesPath": "/Users/davide/.nuget/packages/",
+        "outputPath": "/Users/davide/RiderProjects/burdui-sharp/BurdUITest/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/davide/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "/Users/davide/.dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {
+              "/Users/davide/RiderProjects/burdui-sharp/BurdUI-old/BurdUI-old.csproj": {
+                "projectPath": "/Users/davide/RiderProjects/burdui-sharp/BurdUI-old/BurdUI-old.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/davide/.dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

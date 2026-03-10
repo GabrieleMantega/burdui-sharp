@@ -1,4 +1,5 @@
 ﻿using System.Xml.Serialization;
+using Avalonia.Media;
 using BurdUI.Utils;
 
 namespace BurdUI;
@@ -24,7 +25,7 @@ public class Button : View
             VerticalAlignment = AlignedText.VerticalTextAlignment.Middle
         };
     }
-    public override void Paint(Graphics g)
+    public override void Paint(DrawingContext g)
     {
         
         this.Border?.Fill(g, this.Bounds);

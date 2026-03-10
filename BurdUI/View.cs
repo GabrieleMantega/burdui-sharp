@@ -1,5 +1,8 @@
 ﻿using System.Globalization;
 using System.Xml.Serialization;
+using Avalonia;
+using Avalonia.Controls.Shapes;
+using Avalonia.Media;
 
 namespace BurdUI;
     
@@ -7,7 +10,7 @@ namespace BurdUI;
 public class View
 {
     [XmlIgnore]
-    public Rectangle Bounds { get; set; }
+    public Rect Bounds { get; set; }
     
     [XmlArray("Children")]   
     [XmlArrayItem("Button", typeof(Button))]
@@ -19,15 +22,15 @@ public class View
     [XmlAttribute("Bounds")]
     public string BoundsAttr
     {
-        get => $"{Bounds.X.ToString(CultureInfo.InvariantCulture)}," +
-               $"{Bounds.Y.ToString(CultureInfo.InvariantCulture)}," +
+        get => $"{Bounds.TopLeft.X.ToString(CultureInfo.InvariantCulture)}," +
+               $"{Bounds.TopLeft.Y.ToString(CultureInfo.InvariantCulture)}," +
                $"{Bounds.Width.ToString(CultureInfo.InvariantCulture)}," +
                $"{Bounds.Height.ToString(CultureInfo.InvariantCulture)}";
         set
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                Bounds = Rectangle.Empty;
+                Bounds = new Rect();
                 return;
             }
 
@@ -40,7 +43,7 @@ public class View
             int w  = int.Parse(parts[2], NumberStyles.Integer, CultureInfo.InvariantCulture);
             int h  = int.Parse(parts[3], NumberStyles.Integer, CultureInfo.InvariantCulture);
 
-            Bounds = new Rectangle(x, y, w, h);
+            Bounds = new Rect(x, y, w, h);
         }
     }
 
@@ -51,18 +54,18 @@ public class View
     }
     
 
-    public virtual void Paint(Graphics g)
+    public virtual void Paint(DrawingContext ctx)
     {
-        var state = g.Save();
-        g.TranslateTransform(this.Bounds.X, this.Bounds.Y);
-        foreach (View child in this.Children)
+        using (ctx.PushTransform(Matrix.CreateTranslation(Bounds.X, Bounds.Y)))
         {
-            child.Paint(g);
-            
-        }
-        
-        g.Restore(state);
-        g.DrawRectangle(Pens.Black, Bounds);
+            foreach (var child in Children)
+            {
+                child.Paint(ctx);
+            }
+        }    
+        // Draw final border rectangle
+        var pen = new Pen(Brushes.Red, 1);    
+        ctx.DrawRectangle(pen, Bounds);
        
     }
 

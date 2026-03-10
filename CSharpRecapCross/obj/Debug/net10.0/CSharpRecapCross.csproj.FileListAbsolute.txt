@@ -1,0 +1,12 @@
+/Users/davide/RiderProjects/burdui-sharp/CSharpRecapCross/bin/Debug/net10.0/CSharpRecapCross.deps.json
+/Users/davide/RiderProjects/burdui-sharp/CSharpRecapCross/bin/Debug/net10.0/CSharpRecapCross.dll
+/Users/davide/RiderProjects/burdui-sharp/CSharpRecapCross/bin/Debug/net10.0/CSharpRecapCross.pdb
+/Users/davide/RiderProjects/burdui-sharp/CSharpRecapCross/obj/Debug/net10.0/CSharpRecapCross.GeneratedMSBuildEditorConfig.editorconfig
+/Users/davide/RiderProjects/burdui-sharp/CSharpRecapCross/obj/Debug/net10.0/CSharpRecapCross.AssemblyInfoInputs.cache
+/Users/davide/RiderProjects/burdui-sharp/CSharpRecapCross/obj/Debug/net10.0/CSharpRecapCross.AssemblyInfo.cs
+/Users/davide/RiderProjects/burdui-sharp/CSharpRecapCross/obj/Debug/net10.0/CSharpRecapCross.csproj.CoreCompileInputs.cache
+/Users/davide/RiderProjects/burdui-sharp/CSharpRecapCross/obj/Debug/net10.0/CSharpRecapCross.sourcelink.json
+/Users/davide/RiderProjects/burdui-sharp/CSharpRecapCross/obj/Debug/net10.0/CSharpRecapCross.dll
+/Users/davide/RiderProjects/burdui-sharp/CSharpRecapCross/obj/Debug/net10.0/refint/CSharpRecapCross.dll
+/Users/davide/RiderProjects/burdui-sharp/CSharpRecapCross/obj/Debug/net10.0/CSharpRecapCross.pdb
+/Users/davide/RiderProjects/burdui-sharp/CSharpRecapCross/obj/Debug/net10.0/ref/CSharpRecapCross.dll

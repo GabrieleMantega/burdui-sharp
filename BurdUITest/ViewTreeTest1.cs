@@ -5,7 +5,7 @@ namespace BurdUITest;
 using BurdUI;
 
 /// <summary>
-/// First test for the BurdUI package
+/// First test for the BurdUI-old package
 /// </summary>
 public partial class ViewTreeTest1 : Form
 {

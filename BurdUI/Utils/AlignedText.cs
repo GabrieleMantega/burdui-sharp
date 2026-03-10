@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Drawing;
 using System.Globalization;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using Avalonia;
+using Avalonia.Media;
 
 namespace BurdUI.Utils
 {
@@ -32,10 +33,12 @@ namespace BurdUI.Utils
         [XmlAttribute]
         public HorizontalTextAlignment HorizontalAlignment { get; set; } = HorizontalTextAlignment.Left;
 
-        public Color Color { get; set; } = Color.Black;
+        public Color Color { get; set; } = Color.FromRgb(0,0,0);
 
         [XmlIgnore]
-        public Font Font { get; set; } = SystemFonts.DefaultFont;
+        public Typeface Font { get; set; } = new Typeface("Segoe UI", FontStyle.Normal, FontWeight.Normal);
+        
+        public double FontSize { get; set; } = 12;
 
         public AlignedText() { }
 
@@ -45,7 +48,7 @@ namespace BurdUI.Utils
         }
 
         public AlignedText(
-            string value, Font font, Color color,
+            string value, Typeface font, Color color,
             HorizontalTextAlignment hAlign = HorizontalTextAlignment.Left,
             VerticalTextAlignment vAlign = VerticalTextAlignment.Top)
         {
@@ -59,45 +62,52 @@ namespace BurdUI.Utils
         /// <summary>
         /// Draws the aligned text inside the given rectangle.
         /// </summary>
-        public void Draw(Graphics g, Rectangle bounds)
+        public void Draw(DrawingContext g, Rect bounds)
         {
-            using (StringFormat sf = new StringFormat())
+            var formatted = new FormattedText(
+                Value,
+                CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                Font,
+                FontSize,
+                new SolidColorBrush(Color));
+            
+            double x = bounds.X;
+            double y = bounds.Y;
+
+            // Horizontal alignment
+            switch (HorizontalAlignment)
             {
-                // Horizontal alignment
-                switch (HorizontalAlignment)
-                {
-                    case HorizontalTextAlignment.Left:
-                        sf.Alignment = StringAlignment.Near;
-                        break;
-                    case HorizontalTextAlignment.Center:
-                        sf.Alignment = StringAlignment.Center;
-                        break;
-                    case HorizontalTextAlignment.Right:
-                        sf.Alignment = StringAlignment.Far;
-                        break;
-                }
+                case HorizontalTextAlignment.Left:
+                    x = bounds.Left;
+                    break;
 
-                // Vertical alignment
-                switch (VerticalAlignment)
-                {
-                    case VerticalTextAlignment.Top:
-                        sf.LineAlignment = StringAlignment.Near;
-                        break;
-                    case VerticalTextAlignment.Middle:
-                        sf.LineAlignment = StringAlignment.Center;
-                        break;
-                    case VerticalTextAlignment.Bottom:
-                        sf.LineAlignment = StringAlignment.Far;
-                        break;
-                }
+                case HorizontalTextAlignment.Center:
+                    x = bounds.Left + (bounds.Width - formatted.Width) / 2;
+                    break;
 
-                sf.FormatFlags = StringFormatFlags.NoClip;
-
-                using (Brush brush = new SolidBrush(Color))
-                {
-                    g.DrawString(Value, Font, brush, bounds, sf);
-                }
+                case HorizontalTextAlignment.Right:
+                    x = bounds.Right - formatted.Width;
+                    break;
             }
+
+            // Vertical alignment
+            switch (VerticalAlignment)
+            {
+                case VerticalTextAlignment.Top:
+                    y = bounds.Top;
+                    break;
+
+                case VerticalTextAlignment.Middle:
+                    y = bounds.Top + (bounds.Height - formatted.Height) / 2;
+                    break;
+
+                case VerticalTextAlignment.Bottom:
+                    y = bounds.Bottom - formatted.Height;
+                    break;
+            }
+
+            g.DrawText(formatted, new Point(x, y));
         }
 
         // ------------------------------
@@ -118,10 +128,15 @@ namespace BurdUI.Utils
             writer.WriteAttributeString("color", ColorToHexRgb(Color));
 
             // Use invariant string for reliable round-tripping regardless of locale.
-            var fc = new FontConverter();
-            string fontStr = fc.ConvertToInvariantString(Font) ?? string.Empty;
+            
+            
+            string fontStr = SerializeTypeface(Font);
             writer.WriteAttributeString("font", fontStr);
+            
+            writer.WriteAttributeString("font-size", FontSize.ToString(CultureInfo.InvariantCulture));
         }
+        
+        
 
         /// <summary>
         /// Reads attributes: vertical, horizontal, value, color (#RRGGBB or #AARRGGBB), font.
@@ -149,21 +164,25 @@ namespace BurdUI.Utils
             if (reader.MoveToAttribute("color"))
             {
                 var parsed = TryParseHexColor(reader.Value, out var c);
-                Color = parsed ? c : Color.Black;
+                Color = parsed ? c : Color.FromRgb(0,0,0);
             }
 
             if (reader.MoveToAttribute("font"))
             {
                 try
                 {
-                    var fc = new FontConverter();
-                    var parsed = fc.ConvertFromInvariantString(reader.Value);
-                    if (parsed is Font f) Font = f;
+                    if (reader.Value != null) Font = DeserializeTypeface(reader.Value);
                 }
                 catch
                 {
-                    Font = SystemFonts.DefaultFont;
+                    Font = new Typeface("Segoe UI", FontStyle.Normal, FontWeight.Normal);
                 }
+            }
+
+            if (reader.MoveToAttribute("font-size"))
+            {
+                var parsed = int.TryParse(reader.Value, out var f);
+                FontSize = parsed ? f : FontSize;
             }
 
             // Move back to the element and consume it properly.
@@ -202,7 +221,7 @@ namespace BurdUI.Utils
         /// </summary>
         public static bool TryParseHexColor(string? text, out Color color)
         {
-            color = Color.Black;
+            color = Avalonia.Media.Color.FromRgb(0,0,0);
             if (string.IsNullOrWhiteSpace(text)) return false;
 
             var t = text.Trim();
@@ -214,7 +233,7 @@ namespace BurdUI.Utils
                     byte.TryParse(t.Substring(2, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var g) &&
                     byte.TryParse(t.Substring(4, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var b))
                 {
-                    color = Color.FromArgb(r, g, b);
+                    color = Color.FromRgb(r, g, b);
                     return true;
                 }
             }
@@ -231,6 +250,23 @@ namespace BurdUI.Utils
             }
 
             return false;
+        }
+        
+        private static Typeface DeserializeTypeface(string value)
+        {
+            var parts = value.Split(';');
+
+            return new Typeface(
+                new FontFamily(parts[0]),
+                Enum.Parse<FontStyle>(parts[1]),
+                Enum.Parse<FontWeight>(parts[2]),
+                Enum.Parse<FontStretch>(parts[3])
+            );
+        }
+        
+        private static string SerializeTypeface(Typeface typeface)
+        {
+            return $"{typeface.FontFamily.Name};{typeface.Style};{typeface.Weight};{typeface.Stretch}";
         }
     }
 }

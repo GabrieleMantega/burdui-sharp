@@ -1,4 +1,5 @@
-﻿namespace CSharpRecap;
+﻿using System;
+namespace CSharpRecap;
 
 public class Class1
 {
